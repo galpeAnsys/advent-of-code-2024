@@ -13,7 +13,8 @@ int main()
 
 	//day1::Run();
 	//day1::Run2();
-	day2::Run();
+	//day2::Run();
+	day2::Run2();
 
 	return 0;
 }
