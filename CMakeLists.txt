@@ -12,7 +12,7 @@ endif()
 project ("AoC24")
 
 # Add source to this project's executable.
-add_executable (AoC24 "AoC24.cpp" "AoC24.h" "P01/DistanceBetweenLists.cpp" "FileHelper.cpp" "FileHelper.h" "P01/DistanceBetweenLists.h")
+add_executable (AoC24 "AoC24.cpp" "AoC24.h" "P01/DistanceBetweenLists.cpp" "FileHelper.cpp" "FileHelper.h" "P01/DistanceBetweenLists.h" "day2/solution.h" "day2/solution.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET AoC24 PROPERTY CXX_STANDARD 20)
