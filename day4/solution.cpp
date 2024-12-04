@@ -7,6 +7,7 @@
 #include "solution.h"
 
 std::regex ptrnXmasLtr(R"(XMAS)");
+std::regex ptrnXmasRtl(R"(SAMX)");
 
 
 int FindAllHorizontalLeftToRight(std::vector<std::string> lines) {
@@ -14,6 +15,19 @@ int FindAllHorizontalLeftToRight(std::vector<std::string> lines) {
 
 	for (std::string line : lines) {
 		auto matchesBegin = std::sregex_iterator(line.begin(), line.end(), ptrnXmasLtr);
+		auto matchesEnd = std::sregex_iterator();
+
+		c += std::distance(matchesBegin, matchesEnd);
+	}
+
+	return c;
+}
+
+int FindAllHorizontalRightToLeft(std::vector<std::string> lines) {
+	int c = 0;
+
+	for (std::string line : lines) {
+		auto matchesBegin = std::sregex_iterator(line.begin(), line.end(), ptrnXmasRtl);
 		auto matchesEnd = std::sregex_iterator();
 
 		c += std::distance(matchesBegin, matchesEnd);
@@ -30,6 +44,12 @@ void MyRun(std::string path) {
 	std::cout << "Left to Right XMAS: " + std::to_string(leftToRight) << std::endl;
 
 	res += leftToRight;
+
+	int rightToLeft = FindAllHorizontalRightToLeft(lines);
+
+	std::cout << "Right to Left XMAS: " + std::to_string(rightToLeft) << std::endl;
+
+	res += rightToLeft;
 
 	std::cout << "Total count: " + std::to_string(res) << std::endl;
 }
