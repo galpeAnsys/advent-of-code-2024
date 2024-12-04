@@ -4,17 +4,20 @@
 #include "AoC24.h"
 #include "P01/DistanceBetweenLists.h"
 #include "day2/solution.h"
+#include "day3/solution.h"
 
 using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	cout << "Advent of Code 2024" << endl;
 
 	//day1::Run();
 	//day1::Run2();
 	//day2::Run();
-	day2::Run2();
+	//day2::Run2();
+	//day3::Run();
+	day3::Run2();
 
 	return 0;
 }
