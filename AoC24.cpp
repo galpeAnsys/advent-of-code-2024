@@ -5,6 +5,7 @@
 #include "P01/DistanceBetweenLists.h"
 #include "day2/solution.h"
 #include "day3/solution.h"
+#include "day4/solution.h"
 
 using namespace std;
 
@@ -17,7 +18,8 @@ int main()
 	//day2::Run();
 	//day2::Run2();
 	//day3::Run();
-	day3::Run2();
+	//day3::Run2();
+	day4::Run();
 
 	return 0;
 }
