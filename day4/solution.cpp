@@ -5,7 +5,6 @@
 #include <regex>
 #include "../FileHelper.h"
 #include "solution.h"
-#include "solution.h"
 
 std::regex ptrnXmasLtr(R"(XMAS)");
 std::regex ptrnXmasRtl(R"(SAMX)");
