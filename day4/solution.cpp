@@ -21,17 +21,16 @@ std::string str(int i) {
 bool CheckInBounds(std::vector<std::string> grid, std::vector<std::pair<int, int>> pos) {
 	int rows = grid.size();
 	int cols = grid[0].size();
-	char r1 = pos[1].first, r2 = pos[2].first, r3 = pos[3].first;
-	char c1 = pos[1].second, c2 = pos[2].second, c3 = pos[3].second;
 
-	if (r1 < 0 || r2 < 0 || r3 < 0 ||
-		r1 > rows || r2 > rows || r3 > rows) {
-		return false;
-	}
+	for (auto& p : pos) {
+		int r = p.first;
+		int c = p.second;
 
-	if (c1 < 0 || c2 < 0 || c3 < 0 ||
-		c1 > cols || c2 > cols || c3 > cols) {
-		return false;
+		if (r < 0 || r >= rows ||
+			c < 0 || c >= cols) 
+		{
+			return false;
+		}
 	}
 
 	return true;
@@ -111,9 +110,45 @@ int TryFindXmas(std::vector<std::string> grid, int r, int c) {
 	return xmasCount;
 }
 
+/*
+M-M
+-A-
+S-S
+*/
+int TryFindXMas(std::vector<std::string> grid, int r, int c) {
+	int xmasCount = 0;
+	if (grid[r][c] != 'A') return 0;
+
+	std::vector<std::pair<int, int>> pos = { {r, c}, {r - 1, c - 1}, {r - 1, c + 1}, {r + 1, c - 1}, {r + 1, c + 1} };
+
+	if (!CheckInBounds(grid, pos)) return 0;
+
+	char topLeft = grid[pos[1].first][pos[1].second];
+	char topRight = grid[pos[2].first][pos[2].second];
+	char center = grid[pos[0].first][pos[0].second];
+	char bottomLeft = grid[pos[3].first][pos[3].second];
+	char bottomRight = grid[pos[4].first][pos[4].second];
+
+	std::string mas1{ topLeft, center, bottomRight };
+	std::string mas2{ topRight, center, bottomLeft };
+
+	if (mas1 != "MAS" && mas1 != "SAM" ||
+		mas2 != "MAS" && mas2 != "SAM")
+	{
+		return 0;
+	}
+
+	std::cout << "At [" + str(r) + ", " + str(c) + "] " + " found:" << std::endl;
+	std::cout << std::string{ topLeft,'-',topRight } << std::endl;
+	std::cout << std::string{ '-', center, '-' } << std::endl;
+	std::cout << std::string{ bottomLeft, '-', bottomRight } << std::endl;
+
+	return 1;
+}
+
 void day4::Run() {
-	//std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day4\\sample3.txt");
-	std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day4\\input.txt");
+	std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day4\\sample4.txt");
+	//std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day4\\input.txt");
 
 	int xmasCount = 0;
 	for (int r = 0; r < grid.size(); r++)
@@ -130,4 +165,18 @@ void day4::Run() {
 }
 
 void day4::Run2() {
+	//std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day4\\sample5.txt");
+	std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day4\\input.txt");
+
+	int xmasCount = 0;
+	for (int r = 0; r < grid.size(); r++)
+	{
+		auto& row = grid[r];
+		for (int c = 0; c < row.size(); c++) {
+			auto& col = row[c];
+			xmasCount += TryFindXMas(grid, r, c);
+		}
+	}
+
+	std::cout << str(xmasCount) << std::endl;
 }

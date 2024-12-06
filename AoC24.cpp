@@ -19,7 +19,8 @@ int main()
 	//day2::Run2();
 	//day3::Run();
 	//day3::Run2();
-	day4::Run();
+	//day4::Run();
+	day4::Run2();
 
 	return 0;
 }
