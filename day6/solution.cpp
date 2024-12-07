@@ -7,11 +7,6 @@
 #include "../FileHelper.h"
 #include "solution.h"
 
-
-std::string Str(int i) {
-	return std::to_string(i);
-}
-
 enum class Dir {
 	NONE, UP, RIGHT, DOWN, LEFT
 };

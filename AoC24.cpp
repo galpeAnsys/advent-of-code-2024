@@ -7,6 +7,7 @@
 #include "day3/solution.h"
 #include "day4/solution.h"
 #include "day6/solution.h"
+#include "day7/solution.h"
 
 using namespace std;
 
@@ -22,7 +23,8 @@ int main()
 	//day3::Run2();
 	//day4::Run();
 	//day4::Run2();
-	day6::Run();
+	//day6::Run();
+	day7::Run();
 
 	return 0;
 }

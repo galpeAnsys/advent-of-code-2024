@@ -25,3 +25,12 @@ std::vector<std::string> ReadInput(std::string inputPath) {
     inputFile.close();
     return lines;
 }
+
+
+std::string Str(int i) {
+    return std::to_string(i);
+}
+
+std::string Str(unsigned long long i) {
+    return std::to_string(i);
+}
