@@ -38,7 +38,7 @@ std::pair<unsigned long long, std::vector<int>> splitNumbers(std::string input) 
 
 enum Op
 {
-    Add, Multiply
+    Add, Multiply, Concat
 };
 
 class Equation {
@@ -61,6 +61,10 @@ public:
             }
             if (operation == Op::Multiply) {
                 result *= num;
+            }
+
+            if (operation == Op::Concat) {
+                result = std::stoull(Str(result) + Str(num));
             }
         }
 
@@ -87,6 +91,9 @@ public:
             if (operation == Op::Multiply) {
                 result += "*" + num;
             }
+            if (operation == Op::Concat) {
+                result += "||" + num;
+            }
         }
 
         std::string str(result + " = " + Str(solution) + "[" + Str(testValue) + "]");
@@ -95,8 +102,10 @@ public:
             std::cout << std::endl;
         }
         else {
-            //ToCoutRed(str);
-            //std::cout << std::endl;
+            /*if (nums.size() <= 3) {
+                ToCoutRed(str);
+                std::cout << std::endl;
+            }*/
         }
     }
 };
@@ -225,7 +234,76 @@ void day7::Run() {
 //
 //// num of operations == numbers.size()-1
 
-void day7::Run2() {
 
+bool IsEquationValid2(std::pair<unsigned long long, std::vector<int>> equation) {
+    unsigned long long testValue = equation.first;
+    std::vector<int> numbers = equation.second;
+
+    Equation eq;
+    eq.testValue = testValue;
+    eq.nums = numbers;
+
+    std::vector<Equation> possibleEquations;
+
+    for (size_t i = 0; i < numbers.size() - 1; i++)
+    {
+        std::vector<Equation> copy1(possibleEquations);
+        std::vector<Equation> copy2(possibleEquations);
+        for (Equation& e : possibleEquations) {
+            e.ops.push_back(Op::Add);
+        }
+
+        for (Equation& e : copy1) {
+            e.ops.push_back(Op::Multiply);
+        }
+        
+        for (Equation& e : copy2) {
+            e.ops.push_back(Op::Concat);
+        }
+
+        possibleEquations.insert(possibleEquations.end(), copy1.begin(), copy1.end());
+        possibleEquations.insert(possibleEquations.end(), copy2.begin(), copy2.end());
+
+        if (possibleEquations.size() == 0) { // 1st loop
+            Equation e1(eq);
+            e1.ops.push_back(Op::Add);
+            possibleEquations.push_back(e1);
+            Equation e2(eq);
+            e2.ops.push_back(Op::Multiply);
+            possibleEquations.push_back(e2);
+            Equation e3(eq);
+            e3.ops.push_back(Op::Concat);
+            possibleEquations.push_back(e3);
+        }
+    }
+
+    for (Equation& e : possibleEquations) {
+        e.solve();
+        e.display();
+    }
+
+    for (Equation& e : possibleEquations) {
+        if (e.testValue == e.solution) return true;
+    }
+    return false;
+}
+
+void day7::Run2() {
+    //std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day7\\sample1.txt");
+    std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day7\\input.txt");
+
+    try {
+        unsigned long long sum = 0;
+        for (auto& line : grid) {
+            auto equation = splitNumbers(line);
+            if (IsEquationValid2(equation)) {
+                sum += equation.first;
+            }
+        }
+        std::cout << Str(sum) << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
 }
 
