@@ -37,11 +37,7 @@ bool inBounds(int rMax, int cMax, pos val) {
 	return true;
 }
 
-void day8::Run() 
-{
-	//std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day8\\sample1.txt");
-	std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day8\\input.txt");
-
+std::unordered_map<char, std::vector<pos>> parseAntennas(std::vector<std::string> grid) {
 	std::unordered_map<char, std::vector<pos>> antennas;
 
 	for (size_t r = 0; r < grid.size(); r++)
@@ -56,15 +52,19 @@ void day8::Run()
 			}
 		}
 	}
+
+	return antennas;
+}
+
+std::unordered_set<pos> solveForAntinodes(std::unordered_map<char, std::vector<pos>> antennas, std::vector<std::string> grid) {
 	std::unordered_set<pos> allAntinodes;
 
 	for (auto& an : antennas)
 	{
-
 		std::unordered_set<pos> antinodes;
 		for (size_t i = 0; i < an.second.size(); i++)
 		{
-			for (size_t j = i+1; j < an.second.size(); j++)
+			for (size_t j = i + 1; j < an.second.size(); j++)
 			{
 				auto& p1 = an.second[i];
 				auto& p2 = an.second[j];
@@ -85,16 +85,17 @@ void day8::Run()
 					allAntinodes.insert(antinode2);
 
 				}
-				
+
 			}
 		}
-		//allAntinodes.insert(allAntinodes.end(), antinodes.begin(), antinodes.end());
 
 		std::cout << "[" + std::to_string(an.first) + "] " + vectorToString(an.second) + " >> " + setToString(antinodes) << std::endl;
-
-
-		
 	}
+
+	return allAntinodes;
+}
+
+void displayAntinodes(std::vector<std::string> grid, std::unordered_set<pos> allAntinodes) {
 	std::vector<std::string> gCopy(grid);
 
 	for (auto& a : allAntinodes) {
@@ -112,10 +113,70 @@ void day8::Run()
 
 		std::cout << std::endl;
 	}
+}
 
+void day8::Run() 
+{
+	//std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day8\\sample1.txt");
+	std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day8\\input.txt");
+
+	std::unordered_map<char, std::vector<pos>>antennas(parseAntennas(grid));
+	std::unordered_set<pos> allAntinodes(solveForAntinodes(antennas, grid));
+
+	displayAntinodes(grid, allAntinodes);
 
 	std::cout << Str(allAntinodes.size()) << std::endl;
 }
 
+std::unordered_set<pos> solveForAntinodes2(std::unordered_map<char, std::vector<pos>> antennas, std::vector<std::string> grid) {
+	std::unordered_set<pos> allAntinodes;
 
-void day8::Run2() {}
+	for (auto& an : antennas)
+	{
+		std::unordered_set<pos> antinodes;
+		for (size_t i = 0; i < an.second.size(); i++)
+		{
+			for (size_t j = i + 1; j < an.second.size(); j++)
+			{
+				auto& p1 = an.second[i];
+				auto& p2 = an.second[j];
+
+				auto rDiff = p2.r - p1.r;
+				auto cDiff = p2.c - p1.c;
+
+				auto antinode1 = p1;
+				while (inBounds(grid.size(), grid[0].size(), antinode1)) {
+					antinodes.insert(antinode1);
+					allAntinodes.insert(antinode1);
+
+					antinode1 = pos(antinode1.r - rDiff, antinode1.c - cDiff);
+				}
+
+				auto antinode2 = p2;
+				while (inBounds(grid.size(), grid[0].size(), antinode2)) {
+					antinodes.insert(antinode2);
+					allAntinodes.insert(antinode2);
+
+					antinode2 = pos(antinode2.r + rDiff, antinode2.c + cDiff);
+				}
+
+			}
+		}
+
+		std::cout << "[" + std::to_string(an.first) + "] " + vectorToString(an.second) + " >> " + setToString(antinodes) << std::endl;
+	}
+
+	return allAntinodes;
+}
+
+void day8::Run2() {
+	//std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day8\\sample1.txt");
+	std::vector<std::string> grid = ReadInput("D:\\ANSYSDev\\Learning\\C++\\AoC24\\day8\\input.txt");
+
+	std::unordered_map<char, std::vector<pos>>antennas(parseAntennas(grid));
+	std::unordered_set<pos> allAntinodes(solveForAntinodes2(antennas, grid));
+
+	displayAntinodes(grid, allAntinodes);
+
+	std::cout << Str(allAntinodes.size()) << std::endl;
+}

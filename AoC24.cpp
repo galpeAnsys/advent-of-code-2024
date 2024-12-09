@@ -28,7 +28,8 @@ int main()
 		//day6::Run();
 		//day7::Run();
 		//day7::Run2();
-		day8::Run();
+		//day8::Run();
+		day8::Run2();
 
 		return 0;
 	}
