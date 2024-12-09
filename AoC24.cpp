@@ -8,24 +8,32 @@
 #include "day4/solution.h"
 #include "day6/solution.h"
 #include "day7/solution.h"
+#include "day8/solution.h"
 
 using namespace std;
 
 int main()
 {
-	cout << "Advent of Code 2024" << endl;
+	try {
+		cout << "Advent of Code 2024" << endl;
 
-	//day1::Run();
-	//day1::Run2();
-	//day2::Run();
-	//day2::Run2();
-	//day3::Run();
-	//day3::Run2();
-	//day4::Run();
-	//day4::Run2();
-	//day6::Run();
-	//day7::Run();
-	day7::Run2();
+		//day1::Run();
+		//day1::Run2();
+		//day2::Run();
+		//day2::Run2();
+		//day3::Run();
+		//day3::Run2();
+		//day4::Run();
+		//day4::Run2();
+		//day6::Run();
+		//day7::Run();
+		//day7::Run2();
+		day8::Run();
 
-	return 0;
+		return 0;
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+		return 1;
+	}
 }

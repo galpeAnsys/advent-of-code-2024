@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <vector>
+#include <string>
 #include "FileHelper.h"
 
 std::vector<std::string> ReadInput(std::string inputPath) {
@@ -25,7 +25,6 @@ std::vector<std::string> ReadInput(std::string inputPath) {
     inputFile.close();
     return lines;
 }
-
 
 std::string Str(int i) {
     return std::to_string(i);
